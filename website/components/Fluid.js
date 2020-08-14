@@ -12,11 +12,11 @@ const Fluid = ({
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTranslate(prev => {
-        if (-prev.y > elemRef.current.clientHeight / 2) {
-          return ({ ...prev, y: -1 });
+        if (prev.y < -50) {
+          return ({ ...prev, y: - 0.03 });
         }
 
-        return ({ ...prev, y: prev.y - 1 });
+        return ({ ...prev, y: prev.y - 0.03 });
       })
     }, 10)
     return () => {
@@ -28,38 +28,25 @@ const Fluid = ({
     <Base 
       ref={elemRef}
       className={className}
-      style={{
-        transform: `rotate3d(1, 0, 1, 30deg)`,
-      }}
     >
       <Wrapper
         style={{
-          transform: `translate3d(0, ${translate.y}px, 0)`,  
+          transform: `translate3d(0, ${translate.y + 25}%, 0)`,  
         }}
       >
         <Distance>
-          <WorkWrapper>
+          <WorkWrapper
+            
+          >
             <Image 
-              src={`https://source.unsplash.com/random?${id}`} 
-              onMouseEnter={() => {
-                console.log('enter id: ', id)  
-              }}
-              // onMouseLeave={() => {
-
-              // }}
+              src={`https://source.unsplash.com/random?${id}`}
             />
           </WorkWrapper>
         </Distance>
         <Distance>
           <WorkWrapper>
-          <Image 
+            <Image 
               src={`https://source.unsplash.com/random?${id}`} 
-              onMouseEnter={() => {
-                console.log('enter id: ', id)  
-              }}
-              // onMouseLeave={() => {
-
-              // }}
             />
           </WorkWrapper>
         </Distance>
@@ -69,32 +56,32 @@ const Fluid = ({
 };
 
 const Base = styled.div`
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  transform: rotate3d(1, 0, 1, 30deg);
 `;
 
-const Wrapper = styled.div``
+const Wrapper = styled.div``;
 
 const Distance = styled.div`
-  min-height: 1500px;
+  min-height: 2000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const WorkWrapper = styled.div`
   width: 60%;
-  padding: 50px;
+  filter: blur(4px);
+  transition: filter 0.3s;
+  :hover {
+    filter: blur(0);
+  }
 `
 
 const Image = styled.img`
   pointer-events: auto;
   max-width: 100%;
   transform: rotate3d(0, 1, 1, -30deg);
-  filter: blur(8px);
-  transition: filter 0.5s;
-  :hover {
-    filter: blur(0);
-  }
 `;
 
 export default Fluid;
