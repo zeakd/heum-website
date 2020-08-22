@@ -10,6 +10,7 @@ export default function WorkPage () {
   const handleMouseEnter = () => {
     // videoRef.current.muted = true;
     videoRef.current.volume = 0;
+    videoRef.current.currentTime = 0;
     videoRef.current.play();
     setHovered(true);
   };
@@ -27,11 +28,9 @@ export default function WorkPage () {
           <Video 
             autoplay={false}
             ref={videoRef}
+            controls={hovered}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onClick={() => {
-              videoRef.current.volume = 1;
-            }}
           >
             <source src="/hyunseo_video.mp4" type="video/mp4" />
           </Video>
