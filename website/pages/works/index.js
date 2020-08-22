@@ -8,8 +8,7 @@ export default function WorkPage () {
   const videoRef = useRef();
   const [hovered, setHovered] = useState(false);
   const handleMouseEnter = () => {
-    // videoRef.current.muted = true;
-    videoRef.current.volume = 0;
+    videoRef.current.muted = true;
     videoRef.current.currentTime = 0;
     videoRef.current.play();
     setHovered(true);
