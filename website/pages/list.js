@@ -17,7 +17,7 @@ const List = (props) => {
           <Fluid id={1} defaultTranslate={{ x: 0, y: 10, z: 0 }}/>
         </FluidWrapper>
       </Background>
-      <Background>
+      {/* <Background>
         <FluidWrapper>
           <Fluid id={2} defaultTranslate={{ x: 0, y: 10, z: 0 }}/>
         </FluidWrapper>
@@ -26,11 +26,11 @@ const List = (props) => {
         <FluidWrapper>
           <Fluid id={3} defaultTranslate={{ x: 0, y: 10, z: 0 }}/>
         </FluidWrapper>
-      </Background>
+      </Background> */}
 
-      <Frame>
+      {/* <Frame>
         <p>asdfasdfasdfasdf</p>
-      </Frame>
+      </Frame> */}
     </Base>
   )
 };

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect, useState, useRef, useMemo, createElement } from 'react';
+import React, { useEffect, useState, useRef, useMemo, createElement } from 'react';
 import styled from '@emotion/styled';
 import throttle from 'lodash/throttle';
 
@@ -31,8 +31,7 @@ const Fluid = ({
   const velocityRef = useRef(genVector(0.01, 0.1));
   const accelerationRef = useRef(genVector(0, 0.000001));
   const [hovered, setHovered] = useState(false);
-  const [pos, setPos] = useState({});
-  const frictionRef = useRef(0.01);
+  const [pos, setPos] = useState({}); 
 
   const elemRef = useRef();
   const imageElemRef = useRef();
@@ -44,8 +43,7 @@ const Fluid = ({
   useEffect(() => {
     if (!hovered) return;
 
-    const handleMouseMove = throttle((e) => {
-      console.log('mousemove');
+    const handleMouseMove = throttle((e) => { 
       const rect = imageElemRef.current.getBoundingClientRect();
       
 
@@ -165,7 +163,7 @@ const Fluid = ({
     })
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!loaded) return;
     run();
   }, [loaded])
@@ -239,11 +237,8 @@ const Distance = styled.div`
 
 const WorkWrapper = styled.div`
   width: 40%;
-  filter: ${({ hovered }) => hovered ? 'blur(0)' : 'blur(8px)'};
-  transition: filter 0.3s;
-  /* :hover {
-    filter: blur(0);
-  } */
+  filter: ${({ hovered }) => hovered ? 'blur(0)' : 'blur(32px)'};
+  transition: filter 0.3s; 
 `
 
 const Image = styled.img`
