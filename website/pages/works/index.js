@@ -66,7 +66,7 @@ const Content = styled.div`
 `;
 
 const WorkWrapper = styled.div`
-  filter: ${({ blured }) => blured ? 'blur(8px)' : 'none'};
+  filter: ${({ blured }) => blured ? 'blur(32px)' : 'none'};
   transition: filter 0.3s;
 `;
 
