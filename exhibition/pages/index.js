@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
 import styled from '@emotion/styled'
-import Intro from 'views/Intro';
 import { Joystick } from 'modules/joystick';
 import Wavy from 'components/Wavy';
 
