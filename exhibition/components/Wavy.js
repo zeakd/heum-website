@@ -27,8 +27,8 @@ export default function Wavy({
   }, [])
   const { freq, scale } = useSpring({
     reset: active,
-    from: { scale: random(50, 100), freq: `${random(0.007, 0.01)}, 0.0` },
-    to: { scale: 0, freq: `${random(0.003, 0.005)}, 0.0` },
+    from: { scale: random(50, 100), freq: `${random(0.007, 0.01)}, ${random(0.007, 0.01)}` },
+    to: { scale: 0, freq: `${random(0.003, 0.005)}, ${random(0.003, 0.005)}` },
     // from: { scale: 80, freq: `0.007, 0.0` },
     // to: { scale: 0, freq: `0.003, 0.0` },
     config: { duration: 1000 },
