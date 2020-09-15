@@ -48,32 +48,12 @@ export default function Work12() {
           <source src="/works/12_4_W.mp4" type="video/mp4" />
         </WavyVideo>
       </ImageLayout>
-      <ImageLayout>
-        <ReplaceAfter
-          after={
-            <Image 
-              src='/works/12_3_W.png'
-              css={css`
-                max-width: 600px;
-              `}
-            />
-          }
-        >
-          <WavyFadeInUp>
-            <Image 
-              src='/works/12_3_W_small.png'
-              css={css`
-                max-width: 600px;
-              `}
-            />
-          </WavyFadeInUp>
-        </ReplaceAfter>
-      </ImageLayout>
+      
       <ImageLayout
         justifyContent={'flex-end'}
         css={css`
           padding-right: 400px;
-          padding-bottom: 100px;
+          padding-bottom: 300px;
         `}
       >
         <WavyFadeInUp>
@@ -105,7 +85,7 @@ export default function Work12() {
       <ImageLayout
         css={css`
           padding-right: 800px;
-          padding-bottom: 400px;
+          padding-bottom: 500px;
         `}
       >
        <WavyFadeInUp>
@@ -116,6 +96,27 @@ export default function Work12() {
             `}
           />
         </WavyFadeInUp>
+      </ImageLayout>
+      <ImageLayout>
+        <ReplaceAfter
+          after={
+            <Image 
+              src='/works/12_3_W.png'
+              css={css`
+                max-width: 600px;
+              `}
+            />
+          }
+        >
+          <WavyFadeInUp>
+            <Image 
+              src='/works/12_3_W_small.png'
+              css={css`
+                max-width: 600px;
+              `}
+            />
+          </WavyFadeInUp>
+        </ReplaceAfter>
       </ImageLayout>
     </ArtworkLayout>
   )
