@@ -111,7 +111,8 @@ const LeftTextContent = styled.div`
   /* bottom: 0; */
   left: 0;
 
-  max-width: 950px;
+  max-width: 900px;
+  padding-right: 30px;
 `
 
 const RightTextContent = styled.div`
@@ -120,7 +121,7 @@ const RightTextContent = styled.div`
   /* bottom: 0; */
   right: 0;
 
-  max-width: 802px;
+  max-width: 760px;
 `
 
 const TitleWrapper = styled.h2`
