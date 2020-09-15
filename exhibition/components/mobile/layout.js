@@ -119,6 +119,7 @@ export const ImageLayout = styled.div`
   padding: 56px 80px;
 
   * {
+    position: relative;
     width: 100%;
     height: 100%;
   }
