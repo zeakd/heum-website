@@ -10,7 +10,7 @@ import { WavyFadeInUp } from 'components/animate'
 import { useScreen } from 'components/theme'
 import { ReplaceAfter } from 'components/perf'
 
-export default function Work7() {
+export default function Work11() {
   useScreen('black')
 
   return (

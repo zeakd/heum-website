@@ -87,6 +87,11 @@ export class Joystick {
     // console.log('end', e.changedTouches[0])
     // console.log('end', e.touches[0])
     const touchY = e.changedTouches[0].pageY
+
+    if (Math.abs(this.prevTouchY - touchY) < 50) {
+      return;
+    }
+    
     if (this.prevTouchY > touchY) {
       this.throttledForwardListener();
     } else {

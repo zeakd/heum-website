@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import MobileDetect from 'mobile-detect'
 import styled from '@emotion/styled';
 import Screen from 'components/screen';
 import { Joystick } from 'modules/joystick';
@@ -24,6 +25,20 @@ import Outro from 'views/works/13'
 import Fin from 'views/works/14'
 import { usePreload } from 'modules/preloading';
 import Progress, { withPreload } from 'views/progress';
+
+const redirect = (ctx, location) => {
+  if (ctx.res) {
+    ctx.res.writeHead(302, { Location: location });
+    ctx.res.end();
+  }
+}
+
+
+const isMobile = (ctx) => {
+  const md = new MobileDetect(ctx.req.headers['user-agent']);
+
+  return !!md.mobile();
+}
 
 function PageView({ pageIndex, views }) {
   return views[pageIndex] || null;
@@ -104,3 +119,12 @@ const Base = styled.div`
 `;
 
 export default withPreload(DesktopHome)
+
+export const getServerSideProps = async (ctx) => {
+  if (isMobile(ctx)) {
+    redirect(ctx, '/m');
+  }
+
+  return { props: {} };
+};
+

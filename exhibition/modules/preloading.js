@@ -19,7 +19,6 @@ export function preloadImages(srcs, cb) {
 }
 
 export function usePreload() {
-  const [allLoaded, setAllLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const srcs = [
@@ -80,7 +79,6 @@ export function usePreload() {
   useEffect(() => {
     preloadImages(srcs, preloadHandler)
   }, [])
-
 
   return [progress];
 }
