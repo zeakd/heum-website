@@ -55,7 +55,7 @@ export default function Work6A() {
           <ReplaceAfter
             after={
               <Image 
-                src='/works/6_2_2_W.png'
+                src='/works/6_2_2_W.jpg'
                 css={css`
                   max-width: 790px;
                   object-fit: cover;
@@ -64,7 +64,7 @@ export default function Work6A() {
             }
           >
             <Image 
-              src='/works/6_2_2_W_small.png'
+              src='/works/6_2_2_W_small.jpeg'
               css={css`
                 max-width: 790px;
                 object-fit: cover;
