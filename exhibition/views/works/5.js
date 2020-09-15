@@ -21,7 +21,7 @@ export default function Work5() {
         Editing everyday life may sound pessimistic. However, editing is in our daily lives as just another play.
       </p>}
       descriptionKo={<p>
-        일상을 편집한다는 메세지가 부정적으로 들릴 수 있다. 하지만 편집은 우리의 일상이고, 그저 즐거운 하나의 놀이이기도 하다. 이 작품은 인스타그램 필터 갤러리에서 경험할 수 있다. (큐알코드 삽입)
+        일상을 편집한다는 메세지가 부정적으로 들릴 수 있다. 하지만 편집은 우리의 일상이고, 그저 즐거운 하나의 놀이이기도 하다. 이 작품은 인스타그램 필터 갤러리에서 경험할 수 있다.
       </p>}
     >
       <ImageLayout>

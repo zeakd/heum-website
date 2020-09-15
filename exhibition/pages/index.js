@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Screen from 'components/screen';
 import { Joystick } from 'modules/joystick';
-import { useTheme, ThemeProvider } from 'components/theme';
+import { useTheme } from 'components/theme';
 import Intro from 'views/works/intro'
 import Work0 from 'views/works/0'
 import Work1 from 'views/works/1'
@@ -22,14 +22,16 @@ import Work11 from 'views/works/11'
 import Work12 from 'views/works/12'
 import Outro from 'views/works/13'
 import Fin from 'views/works/14'
+import { usePreload } from 'modules/preloading';
+import Progress, { withPreload } from 'views/progress';
 
 function PageView({ pageIndex, views }) {
   return views[pageIndex] || null;
 }
 
-export default function DesktopHome () {
+function DesktopHome () {
   const [{ screen }] = useTheme()
-
+  // console.log(progress);
 
   const views = [
     <Intro />,
@@ -50,7 +52,9 @@ export default function DesktopHome () {
     <Work11 />,
     <Work12 />,
     <Outro />,
-    <Fin />,
+    <Fin 
+      onGoToFirst={() => setPageIndex(0)}
+    />,
   ]
 
   // handle pages
@@ -67,7 +71,10 @@ export default function DesktopHome () {
     joystickRef.current.activate();
 
     const id = setTimeout(() => {
-      setPageIndex(0);
+      setPageIndex(prev => {
+        if (prev > 0) return prev;
+        return 0;
+      });
     }, 2000)
 
     return () => {
@@ -95,3 +102,5 @@ const Base = styled.div`
   width: 100%;
   height: 100%;
 `;
+
+export default withPreload(DesktopHome)

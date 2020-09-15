@@ -84,9 +84,10 @@ export function ArtworkLayout ({
   page,
   children,
   splitTitle,
+  className
 }) {
   return (
-    <Base>
+    <Base className={className}>
       {children}
       <TextContent>
         <TitleWrapper>
@@ -120,7 +121,7 @@ const Base = styled.div`
   height: 100%;
 `
 
-const TextContent = styled.div`
+export const TextContent = styled.div`
   pointer-events: none;
   position: absolute;
   bottom: 0;

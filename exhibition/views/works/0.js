@@ -66,7 +66,7 @@ export default function Work0() {
           </RightTextContent>
         </TextContent>
       </Content>
-      <CounterLayout
+      {/* <CounterLayout
         justifyContent='flex-start'
         alignItems='center'
       >
@@ -74,7 +74,7 @@ export default function Work0() {
           page={0}
           size={13}
         />
-      </CounterLayout>
+      </CounterLayout> */}
       
     </Base>
   )

@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import {
   ArtworkLayout,
   ImageLayout,
+  TextContent,
 } from 'components/artwork'
 import { WavyVideo, WavyFadeInUp } from 'components/animate'
 import { useScreen } from 'components/theme'
@@ -13,7 +14,7 @@ export default function Work5() {
   useScreen('white')
 
   return (
-    <ArtworkLayout
+    <StyledArtworkLayout
       page={6}
       title={'산책 / A walk (1,2,4)'}
       subtitle={'녹기(김유겸, 박승준), 조현서, 2020, multi material on arcylic , 60cm x 85 cm'}
@@ -58,8 +59,13 @@ export default function Work5() {
           />
         </WavyFadeInUp>
       </ImageLayout>
-    </ArtworkLayout>
+    </StyledArtworkLayout>
   )
 }
 
 const Image = styled.img``
+const StyledArtworkLayout = styled(ArtworkLayout)`
+  ${TextContent} {
+    max-width: 820px;
+  }
+`

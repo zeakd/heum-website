@@ -3,12 +3,6 @@ import styled from '@emotion/styled';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { useScreen } from 'components/theme';
-import { 
-  FlexLayout,
-  ImageLayout,
-} from 'components/artwork'
-import Counter from 'components/counter'
-import { WavyFadeInUp } from 'components/animate';
 
 function ArrowUp (props) {
   return (
@@ -48,14 +42,14 @@ export default function Fin({
   return (
     <Base>
       <LeftTextContent>
-        <Direction>
-          <ArrowUp /><span>GO TO FIRST</span>
+        <Direction onClick={onGoToFirst}>
+          <A><ArrowUp /><span>GO TO FIRST</span></A>
         </Direction>
         <Direction>
-          <ArrowRight /><span>INSTAGRAM</span>
+          <A href='https://www.instagram.com/haeummyocean/' target='_blank'><ArrowRight /><span>INSTAGRAM</span></A>
         </Direction>
         <Direction>
-          <ArrowRight /><span>GALLERY MAP</span>
+          <A href='http://naver.me/xDYu3QK8' target='_blank'><ArrowRight /><span>GALLERY MAP</span></A>
         </Direction>
       </LeftTextContent>
       <RightTextContent>
@@ -135,4 +129,9 @@ const Paragraph = styled.p`
   letter-spacing: -0.27px;
 
   min-height: 1.2em;
+`;
+
+const A = styled.a`
+  line-height: 0;
+  cursor: pointer;
 `;
