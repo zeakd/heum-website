@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from '@emotion/styled'
 /** @jsx jsx */
 import { jsx, css, keyframes } from '@emotion/core'
@@ -20,45 +20,58 @@ function easeOutCirc(x) {
 export default function Wavy({
   active,
   children,
+  width,
+  height,
 }) {
-  const idRef = useRef();
+  const [id, setId] = useState();
+  // const idRef = useRef();
   useEffect(() => {
-    idRef.current = Math.random().toString(36).substring(7);
+    // idRef.current = Math.random().toString(36).substring(7);
+    setId(Math.random().toString(36).substring(7));
   }, [])
+
+  // const { freq, scale } = useSpring({
+  //   reset: active,
+  //   from: { scale: random(50, 100), freq: `${random(0.007, 0.01)}, ${random(0.007, 0.01)}` },
+  //   to: { scale: 0, freq: `${random(0.003, 0.005)}, ${random(0.003, 0.005)}` },
+  //   config: { duration: 1000 },
+  //   easing: () => 1,
+  // })
+
   const { freq, scale } = useSpring({
     reset: active,
-    from: { scale: random(50, 100), freq: `${random(0.007, 0.01)}, ${random(0.007, 0.01)}` },
-    to: { scale: 0, freq: `${random(0.003, 0.005)}, ${random(0.003, 0.005)}` },
-    // from: { scale: 80, freq: `0.007, 0.0` },
-    // to: { scale: 0, freq: `0.003, 0.0` },
+    from: { scale: 60, freq: `0.008, 0.008` },
+    to: { scale: 0, freq: `0.003, 0.007` },
     config: { duration: 1000 },
-    easing: () => 1,
+    // easing: () => 1,
   })
+
+  // console.log(idRef.current)
 
   return (
     <Wrapper
-      css={css({
-        animation: active && `${fadeInUp} 1s ease`
-      })}
+      // css={css({
+      //   animation: active && `${fadeInUp} 1s ease`
+      // })}
     >
       <animated.svg
-        // style={{ 
-        //   width: '500px',
-        //   height: '500px',
-        // }}
-        viewBox="0 0 1200 1200"
-        preserveAspectRatio="xMidYMid meet"
-        width={500}
-        height={500}
+        viewBox={`0 0 ${width || 1000} ${height || 1000}`}
+        // preserveAspectRatio="xMidYMid meet"
+        style={{ 
+          position: 'absolute',
+          opacity: 0,
+        }}
+        width={width}
+        height={height}
       >
         <defs>
-          <filter id={idRef.current}>
+          <filter id={id} filterUnits="userSpaceOnUse">
             <AnimFeTurbulence 
               type="fractalNoise"
               baseFrequency={freq}
               numOctaves={1}
               result="TURB"
-              seed="8"
+              seed="1"
             />
             <AnimFeDisplacementMap 
               xChannelSelector="R"
@@ -67,17 +80,16 @@ export default function Wavy({
               in2="TURB"
               result="DISP"
               scale={scale} 
+              // scale={100} 
             />
           </filter>
         </defs>
-        <foreignObject width="100%" height="100%">
-          <ChildWrapper 
-            xmlns="http://www.w3.org/1999/xhtml"
-            style={{ filter: `url(#${idRef.current})` }} >
-            {children}
-          </ChildWrapper>
-        </foreignObject>
+          {/* <rect x="0" y="0" width="200" height="200" style={{ filter: `url(#${id})` }} /> */}
       </animated.svg>
+      <ChildWrapper 
+        style={{ filter: `url(#${id})` }} >
+        {children}
+      </ChildWrapper>
     </Wrapper>
   )
 }
@@ -85,13 +97,13 @@ export default function Wavy({
 const Wrapper = styled.div``;
 const ChildWrapper = styled.div`
   position: relative;
-  width: 1200px;
-  height: 1200px;
+  /* width: 400px; */
+  /* height: 400px; */
 
   display: flex;
   justify-content: center;
   align-items: center;
-  /* > * {
+  > * {
     max-width: 100%;
-  } */
+  }
 `;

@@ -4,13 +4,22 @@ import throttle from 'lodash/throttle';
 export class Joystick {
   constructor() {
     this.active = false;
-    this.prevWheelDelta = 0;
-    this._forwardListener = throttle(() => {
+    this.prevDelta = 0;
+    this.prevTouchY = 0;
+    this.throttledForwardListener = throttle(() => {
+      this._forwardListener();
+    }, 500, { trailing: false });
+    this.throttledBackwardListener = throttle(() => {
+      this._backwardListener();
+    }, 500, { trailing: false });
+
+
+    this._forwardListener = () => {
       this.onForward && this.onForward();
-    }, 500, { trailing: false });
-    this._backwardListener = throttle(() => {
+    };
+    this._backwardListener = () => {
       this.onBackward && this.onBackward();
-    }, 500, { trailing: false });
+    };
   }
 
   // onForward (cb) {
@@ -26,32 +35,78 @@ export class Joystick {
 
 
     window.addEventListener('wheel', this.mousewheelHandler);
-    window.addEventListener('mousewheel', this.mousewheelHandler);
-  }
+    // window.addEventListener('mousewheel', this.mousewheelHandler);
+    // window.addEventListener('DOMMouseScroll', this.mousewheelHandler);
 
+    window.addEventListener('touchstart', this.touchstartHandler)
+    window.addEventListener('touchend', this.touchendHandler)
+    document.addEventListener('keydown', this.keydownHandler);
+  }
+  
   deactivate () {
     this.active = false;
     window.removeEventListener('wheel', this.mousewheelHandler);
-    window.removeEventListener('mousewheel', this.mousewheelHandler);
+    // window.removeEventListener('mousewheel', this.mousewheelHandler);
+    // window.removeEventListener('DOMMouseScroll', this.mousewheelHandler);
+    
+    window.removeEventListener('touchstart', this.touchstartHandler)
+    window.removeEventListener('touchend', this.touchendHandler)
+    document.removeEventListener('keydown', this.keydownHandler);
   }
 
   mousewheelHandler = (e) => {
-    if (Math.abs(e.wheelDelta) > 50) {
-      if (e.wheelDelta < 0) {
-        if (this.prevWheelDelta > e.wheelDelta) {
-          this._forwardListener();
+    // console.log('wheel', e.deltaY)
+    const { deltaY } = e;
+    if (Math.abs(deltaY) > 50) {
+      if (deltaY < 0) {
+        if (this.prevDelta > deltaY) {
+          this.throttledBackwardListener();
         }
         //scroll down
       } else {
         //scroll up
-        if (this.prevWheelDelta < e.wheelDelta) {
-          this._backwardListener();
+        if (this.prevDelta < deltaY) {
+          this.throttledForwardListener();
         }
       }
     }
 
-    this.prevWheelDelta = e.wheelDelta;
+    this.prevDelta = deltaY;
     
+  }
+
+  touchstartHandler = e => {
+    // console.log('start', e.changedTouches[0])
+    // console.log('start', e.touches[0])
+    // console.log('start', e)
+    this.prevTouchY = e.changedTouches[0] && e.changedTouches[0].pageY
+
+  }
+
+  touchendHandler = e => {
+    // console.log('end', e.changedTouches[0])
+    // console.log('end', e.touches[0])
+    const touchY = e.changedTouches[0].pageY
+    if (this.prevTouchY > touchY) {
+      this.throttledForwardListener();
+    } else {
+      this.throttledBackwardListener();
+    }
+  }
+
+  keydownHandler = event => {
+    if (event.key) {
+      switch (event.key) {
+        case "ArrowUp":
+        case "ArrowLeft":
+          this._backwardListener();
+          break;
+        case "ArrowDown":
+        case "ArrowRight":
+          this._forwardListener();
+          break;
+      }
+    }
   }
 }
 
