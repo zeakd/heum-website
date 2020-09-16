@@ -50,7 +50,7 @@ import { useTheme } from 'components/theme';
 import MobileScreen from 'components/mobile/screen';
 import { NonFullscreenOverlay, PortraitOverlay } from 'components/mobile/overlay';
 
-function MobileHome() {
+function InnerView() {
   const [{ screen }] = useTheme()
   const baseElemRef = useRef();
   // useEffect(() => {
@@ -131,13 +131,7 @@ function MobileHome() {
     <Base 
       ref={baseElemRef}
     >
-      <Head>
-        <title>PETER PIPER PICKED A PECK OF PICKLED PIPERS</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta property="og:title" content="PETER PIPER PICKED A PECK OF PICKLED PIPERS" />
-        <meta property="og:image" content="https://www.pickledpipers.com/works/00_1_B.jpg" />
-        <meta property="og:url" content="https://www.pickledpipers.com/" />
-      </Head>
+      
       <MobileScreen 
         theme={screen}
         isFirstRender={pageIndex === 0 || pageIndex === -1}
@@ -154,6 +148,22 @@ function MobileHome() {
   )
 }
 
+const View = withPreload(InnerView)
+
+export default function MobileHome() {
+  return (
+    <>
+    <Head>
+      <title>PETER PIPER PICKED A PECK OF PICKLED PIPERS</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta property="og:title" content="PETER PIPER PICKED A PECK OF PICKLED PIPERS" />
+      <meta property="og:image" content="https://www.pickledpipers.com/works/00_1_B.jpg" />
+      <meta property="og:url" content="https://www.pickledpipers.com/" />
+    </Head>
+    <View />
+    </>
+  )
+}
 
 const Base = styled.div`
   position: relative;
@@ -175,5 +185,3 @@ const Base = styled.div`
     }
   }
 `;
-
-export default withPreload(MobileHome)

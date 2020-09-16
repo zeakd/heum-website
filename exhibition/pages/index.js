@@ -45,7 +45,7 @@ function PageView({ pageIndex, views }) {
   return views[pageIndex] || null;
 }
 
-function DesktopHome () {
+function View () {
   const [{ screen }] = useTheme()
   // console.log(progress);
 
@@ -101,13 +101,6 @@ function DesktopHome () {
 
   return (
     <Base>
-      <Head>
-        <title>PETER PIPER PICKED A PECK OF PICKLED PIPERS</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta property="og:title" content="PETER PIPER PICKED A PECK OF PICKLED PIPERS" />
-        <meta property="og:image" content="https://www.pickledpipers.com/works/00_1_B.jpg" />
-        <meta property="og:url" content="https://www.pickledpipers.com/" />
-      </Head>
       <Screen theme={screen} 
         isFirst={pageIndex === -1 || pageIndex === 0}
       >
@@ -126,7 +119,22 @@ const Base = styled.div`
   height: 100%;
 `;
 
-export default withPreload(DesktopHome)
+const InnerView = withPreload(View);
+
+export default function DesktopHome() {
+  return (
+    <>
+      <Head>
+        <title>PETER PIPER PICKED A PECK OF PICKLED PIPERS</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta property="og:title" content="PETER PIPER PICKED A PECK OF PICKLED PIPERS" />
+        <meta property="og:image" content="https://www.pickledpipers.com/works/00_1_B.jpg" />
+        <meta property="og:url" content="https://www.pickledpipers.com/" />
+      </Head>
+      <InnerView />
+    </>
+  )
+}
 
 export const getServerSideProps = async (ctx) => {
   if (isMobile(ctx)) {
