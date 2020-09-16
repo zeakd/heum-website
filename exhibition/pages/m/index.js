@@ -157,7 +157,8 @@ export default function MobileHome() {
       <title>PETER PIPER PICKED A PECK OF PICKLED PIPERS</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta property="og:title" content="PETER PIPER PICKED A PECK OF PICKLED PIPERS" />
-      <meta property="og:image" content="https://www.pickledpipers.com/works/00_1_B.jpg" />
+      <meta property="og:image" content="http://www.pickledpipers.com/works/00_1_B.jpg" />
+      <meta property="og:image:secure_url" content="https://www.pickledpipers.com/works/00_1_B.jpg" />
       <meta property="og:url" content="https://www.pickledpipers.com/" />
     </Head>
     <View />
