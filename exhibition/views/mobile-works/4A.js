@@ -25,7 +25,7 @@ export default function Work4A () {
       header={
         <BlockHeader>
           <Title>Warp</Title>
-          <Subtitle>손희덕, 조현서 @positlabs, 2020, Instagram filter , monitor, 160 x 80 cm</Subtitle>
+          <Subtitle css={css`line-height: 1.2em;`}>손희덕, 조현서 <br/>@positlabs, 2020, Instagram filter , monitor, 160 x 80 cm</Subtitle>
         </BlockHeader>
       }
 

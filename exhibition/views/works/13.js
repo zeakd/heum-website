@@ -69,10 +69,10 @@ export default function Outro() {
             margin-bottom: 8px;
           `}
         >
-          <p>GALLERY PUNTOBLU</p>
+          <p>GALLERY PUNTO BLU</p>
         </Title>
         <Paragraph>
-          M-F 11-22 | Sat 14-22
+          Mon-Sat 11-22
         </Paragraph>
         <Paragraph>
           61, Seongsui-ro 22-gil, Seongdong-gu, Seoul, Republic of Korea

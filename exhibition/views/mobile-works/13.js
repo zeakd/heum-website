@@ -30,10 +30,10 @@ export default function Work13 () {
           </Text>
         </p>
         <TitleWrapper>
-          <p>GALLERY PUNTOBLU</p>
+          <p>GALLERY PUNTO BLU</p>
         </TitleWrapper>
         <p>
-          <Text>M-F 11-22 | Sat 14-22</Text>
+          <Text>Mon-Sat 11-22</Text>
         </p>
         <p>
           <Text>61, Seongsui-ro 22-gil, Seongdong-gu, Seoul, Republic of Korea</Text>

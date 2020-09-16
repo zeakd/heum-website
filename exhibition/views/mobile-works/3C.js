@@ -15,7 +15,7 @@ import { WavyFadeInUp } from 'components/animate';
 import { ReplaceAfter } from 'components/perf';
 
 export default function Work1 () {
-  useScreen('black');
+  useScreen('white');
 
   return (
     <PageLayout
