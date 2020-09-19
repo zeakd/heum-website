@@ -44,10 +44,31 @@ export default function Outro ({
           <A><ArrowUp /><span>GO TO FIRST</span></A>
         </Direction>
         <Direction>
-          <A href='https://www.instagram.com/haeummyocean/' target='_blank'><ArrowRight /><span>INSTAGRAM</span></A>
+          <A 
+            href='https://www.instagram.com/haeummyocean/' 
+            target='_blank'
+            onClick={(event) => {
+              if (!window.ga) return;
+              ga('send', 'event', {
+                eventCategory: 'Outbound Link',
+                eventAction: 'click',
+                eventLabel: 'https://www.instagram.com/haeummyocean/' 
+              });
+            }}
+          ><ArrowRight /><span>INSTAGRAM</span></A>
         </Direction>
         <Direction>
-          <A href='http://naver.me/xDYu3QK8' target='_blank'><ArrowRight /><span>GALLERY MAP</span></A>
+          <A 
+            href='http://naver.me/xDYu3QK8' target='_blank'
+            onClick={() => {
+              if (!window.ga) return;
+              ga('send', 'event', {
+                eventCategory: 'Outbound Link',
+                eventAction: 'click',
+                eventLabel: 'http://naver.me/xDYu3QK8' 
+              });
+            }}
+          ><ArrowRight /><span>GALLERY MAP</span></A>
         </Direction>
         <div css={css`
           margin-top: 10px;

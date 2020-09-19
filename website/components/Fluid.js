@@ -5,7 +5,7 @@ import { useRafLoop } from 'react-use';
 
 const random = (from, to) => (to - from) * Math.random() + from;
 
-const getMagnitude = (x, y) => Math.sqrt(x * x + y * y);
+const getMagnitude = ({ x, y }) => Math.sqrt(x * x + y * y);
 
 const genVector = (from, to) => {
   const xDirection = random(-1, 1);
@@ -52,9 +52,9 @@ const Fluid = ({
   const baseRef = useRef();
   const fluiderRef = useRef();
   const [centerPos, setCenterPos] = useState({ x: 0, y: 0 });
-  const [distance, setDistance] = useState(-400);
-  // const centerVeloRef = useRef(genVector(0, 0.01));
-  // const centerAccRef = useRef({ x: 0, y: 0 });
+  const [distance, setDistance] = useState(0);
+  const velocityRef = useRef(genVector(0.01, 0.1));
+  const accelerationRef = useRef(genVector(0, 0.000001));
 
   const rendered = useMemo(() => render({ hovered }), [hovered]);
   const timeRef = useRef(0);
@@ -64,31 +64,66 @@ const Fluid = ({
     const timeDiff = time - timeRef.current;
     timeRef.current = time;
 
-    setDistance(prev => prev + 0.1);
+    // setDistance(prev => prev + 0.1);
+
+    const velocity = velocityRef.current;
+    const speed = getMagnitude(velocity);
+
+    const distance = speed * timeDiff;
+
+    setDistance(prev => prev + distance);
+
+    // setTranslate(prev => {
+    //   if (prev.y < - elemRef.current.offsetHeight / 2) {
+    //     return ({ ...prev, y: - distance });
+    //   }
+
+    //   return ({ ...prev, y: prev.y - distance });
+    // })
+
+    // console.log(hoveredRef.current)
+
+    if (hoveredRef.current) {
+      accelerationRef.current = { x: 0, y: 0 };
+      velocityRef.current = { 
+        x: velocityRef.current.x / speed * 0.01,
+        y: velocityRef.current.y / speed * 0.01,
+      }
+
+      return;
+    }
+
+    const acc = accelerationRef.current;
+    const nextVelocity = {
+      x: velocity.x + acc.x * timeDiff,
+      y: velocity.y + acc.y * timeDiff,
+    };
+
+    velocityRef.current = nextVelocity;
   })
 
   useEffect(() => {
     start();
   }, [])
 
-  useEffect(() => {
-    if (hovered) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (hovered) {
+  //     return;
+  //   }
 
-    setCenterPos({
-      x: random(-window.innerWidth / 2, window.innerWidth / 2),
-      y: random(-window.innerHeight / 2, window.innerHeight / 2),
-    })
-    const intervalId = setInterval(() => {
-      setCenterPos({
-        x: random(-window.innerWidth / 2, window.innerWidth / 2),
-        y: random(-window.innerHeight / 2, window.innerHeight / 2),
-      })
-    }, 1000 * 10);
+  //   setCenterPos({
+  //     x: random(-window.innerWidth / 2, window.innerWidth / 2),
+  //     y: random(-window.innerHeight / 2, window.innerHeight / 2),
+  //   })
+  //   const intervalId = setInterval(() => {
+  //     setCenterPos({
+  //       x: random(-window.innerWidth / 2, window.innerWidth / 2),
+  //       y: random(-window.innerHeight / 2, window.innerHeight / 2),
+  //     })
+  //   }, 1000 * 10);
 
-    return () => clearInterval(intervalId);
-  }, [hovered])
+  //   return () => clearInterval(intervalId);
+  // }, [hovered])
 
   // useEffect(() => {
   //   let time = 0;
@@ -104,13 +139,33 @@ const Fluid = ({
   // }, [])
   // console.log(centerPos, `translate(${centerPos.x}px, ${centerPos.y}px)`);
 
+  useEffect(() => {    
+    if (hovered) return;
+    const intervalId = setInterval(() => {      
+      const nextAddedAcc = genVector(0, 0.000001);
+      const nextAcc = {
+        x: accelerationRef.current.x + nextAddedAcc.x,
+        y: accelerationRef.current.y + nextAddedAcc.y,
+      }
+
+      // console.log(nextAcc)
+
+      accelerationRef.current = {
+        ...nextAcc,
+        // power: Math.sqrt(nextAcc.x * nextAcc.x + nextAcc.y * nextAcc.y),
+      }
+    }, 10000);
+    
+    return () => clearInterval(intervalId);
+  }, [hovered])
+
   const handleMouseMove = useCallback(throttle(({ clientX, clientY }) => { 
     const fluiderCenter = getElemCenter(fluiderRef.current);
     const baseCenter = getElemCenter(baseRef.current);
     
     const diffX = clientX - fluiderCenter.x;
     const diffY = clientY - fluiderCenter.y;
-currentMousePosRef
+
     if (hoveredRef.current) {
       setCenterPos({ 
         x: baseCenter.x - window.innerWidth / 2 + diffX, 
@@ -118,6 +173,8 @@ currentMousePosRef
       });
     }
   }, 100), [])
+
+  const rad = Math.atan2(velocityRef.current.y, velocityRef.current.x);
 
   return (
     <Base
@@ -127,35 +184,36 @@ currentMousePosRef
         transition: hovered ? 'transform 10s cubic-bezier(0.33, 1, 0.68, 1)' : 'transform 15s linear',
       }}
     >
-      <div
+      <FluiderAngle
         style={{
-          transform: `translate(${distance}px)`,
+          transform: `rotateZ(${rad}rad)`,
         }}
       >
-        <Fluider
-          ref={fluiderRef}
-          
-          hovered={hovered}
-          onMouseEnter={() => {
-            setHovered(true)
-            const center = getElemCenter(baseRef.current);
-            setCenterPos({ 
-              x: center.x - window.innerWidth / 2,
-              y: center.y - window.innerHeight / 2,
-            })
-          }}
-          onMouseLeave={() => {
-            setHovered(false)
-            setCenterPos({ x: 0, y: 0 });
-          }}
-          onMouseMove={(e) => handleMouseMove({ 
-            clientX: e.clientX,
-            clientY: e.clientY,
-          })}
-        >
-          {rendered}
-        </Fluider>
-      </div>
+        <FluiderDistance style={{ transform : `translate: ${distance}px`}}>
+          <Fluider
+            ref={fluiderRef}
+            hovered={hovered}
+            onMouseEnter={() => {
+              setHovered(true)
+              const center = getElemCenter(baseRef.current);
+              setCenterPos({ 
+                x: center.x - window.innerWidth / 2,
+                y: center.y - window.innerHeight / 2,
+              })
+            }}
+            onMouseLeave={() => {
+              setHovered(false)
+              setCenterPos({ x: 0, y: 0 });
+            }}
+            onMouseMove={(e) => handleMouseMove({ 
+              clientX: e.clientX,
+              clientY: e.clientY,
+            })}
+          >
+            {rendered}
+          </Fluider>
+        </FluiderDistance>
+      </FluiderAngle>
     </Base>
   )
   // const [translate, setTranslate] = useState(defaultTranslate);
@@ -359,14 +417,27 @@ const Base = styled.div`
   width: 100%;
   height: 100%;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const DirectionWrapper = styled.div``;
-const SpeedWrapper = styled.div``;
+const FluiderAngle = styled.div``;
+const FluiderDistance = styled.div`
+  min-height: 4000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Distance = styled.div`
+  min-height: 4000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FluiderPosition = styled.div`
   min-height: 4000px;
   display: flex;
   justify-content: center;
