@@ -14,7 +14,7 @@
     "babel-plugin-emotion": "^10.0.33",
     "lodash": "^4.17.20",
     "mobile-detect": "^1.4.4",
-    "next": "9.5.3",
+    "next": "11.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-spring": "^8.0.27"
